@@ -1,0 +1,29 @@
+{
+  "host": {
+    "name": "Guta - Raul Domingo ",
+    "role": "Hosters"
+  },
+  "guest": {
+    "name": "Serenata Gaucha",
+    "role": "invitado Especial",
+    "bio": "",
+    "socials": [
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      },
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      },
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      }
+    ]
+  },
+  "ticker": []
+}

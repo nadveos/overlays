@@ -1,0 +1,18 @@
+# Dependencias
+node_modules/
+
+# Carpetas con archivos locales/privados
+render/
+invited-artists/
+
+# Archivos de render e imágenes generadas
+*.png
+*.webm
+*.exe
+
+# Archivos temporales y de texto de notas
+*.txt
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db

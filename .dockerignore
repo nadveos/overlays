@@ -1,0 +1,10 @@
+node_modules/
+render/
+*.png
+*.txt
+*.js
+package.json
+package-lock.json
+overlay_vertical_preview.png
+test_cut.png
+.git/

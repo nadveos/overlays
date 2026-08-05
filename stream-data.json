@@ -1,0 +1,40 @@
+{
+  "host": {
+    "name": "Guta Flores",
+    "role": "Hoster"
+  },
+  "guest": {
+    "name": "",
+    "role": "",
+    "bio": "",
+    "socials": [
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      },
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      },
+      {
+        "icon": "",
+        "platform": "",
+        "handle": ""
+      }
+    ]
+  },
+  "ticker": [
+    {
+      "prefix": "ALITAS : GUTA.FLORES",
+      "text": "ALITAS : GUTA.FLORES",
+      "highlight": true
+    },
+    {
+      "prefix": "Auspiciantes: Corralón del Rosario - Autoservicios La Ruta - Milonguita Dev - ARCNOA",
+      "text": "",
+      "highlight": true
+    }
+  ]
+}

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css">
+  <title>Guta Flores — Overlay Vertical (1080x1920)</title>
+  <style>
+    /* Adaptaciones específicas para formato Vertical (1080x1920) */
+    html, body {
+      width: 1080px;
+      height: 1920px;
+      overflow: hidden;
+    }
+
+    .main-border {
+      width: 1080px;
+      height: 1920px;
+      padding: 16px;
+    }
+
+    /* Header superior */
+    .top-header {
+      top: 36px;
+      font-size: 26px;
+      padding: 12px 48px;
+      border-radius: 40px;
+    }
+
+    .top-header .badge {
+      font-size: 16px;
+      padding: 6px 16px;
+      border-radius: 20px;
+    }
+
+    /* LAYOUT PRINCIPAL VERTICAL */
+    .vertical-layout {
+      position: absolute;
+      top: 130px;
+      left: 24px;
+      right: 24px;
+      bottom: 110px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    /* SECCIÓN INVITADO (PROTAGONISTA - VERTICAL 9:16) */
+    .guest-section {
+      flex: 1; /* Ocupa el mayor espacio disponible */
+      display: flex;
+      gap: 20px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    /* Marco del Invitado: Vertical (9:16) */
+    .guest-cam-box {
+      flex: 0 0 680px; /* Ancho fijo para mantener ratio 9:16 en la altura correspondiente */
+      height: 100%;
+      position: relative;
+      border-radius: 20px;
+      padding: 8px;
+      background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
+      background-size: 200% 200%;
+      animation: borderGlow 6s ease infinite;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .guest-cam-box .cam-window {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Panel Lateral de Información / RRSS del Invitado */
+    .guest-info-panel {
+      flex: 1;
+      background: rgba(15, 15, 15, 0.85);
+      border: 2px solid #C0392B;
+      border-radius: 20px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(139, 0, 0, 0.3);
+      backdrop-filter: blur(5px);
+    }
+
+    .info-header {
+      border-bottom: 2px solid rgba(192, 57, 43, 0.5);
+      padding-bottom: 12px;
+      text-align: center;
+    }
+
+    .info-tag {
+      font-size: 13px;
+      font-weight: 800;
+      color: #E74C3C;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .info-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #FFD700;
+      margin-top: 4px;
+      line-height: 1.2;
+    }
+
+    .social-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 16px 0;
+    }
+
+    .social-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 12px 14px;
+      border-radius: 12px;
+      border-left: 4px solid #C0392B;
+    }
+
+    .social-icon {
+      font-size: 22px;
+    }
+
+    .social-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .social-platform {
+      font-size: 11px;
+      color: #AAA;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .social-handle {
+      font-size: 16px;
+      color: #FFF;
+      font-weight: 700;
+    }
+
+    .guest-bio {
+      font-size: 14px;
+      color: #DDD;
+      line-height: 1.4;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px dashed rgba(255, 215, 0, 0.3);
+    }
+
+    /* SECCIÓN ANFITRIÓN (HORIZONTAL 16:9) */
+    .host-section {
+      height: 480px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .host-cam-box {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16 / 9;
+      position: relative;
+      border-radius: 20px;
+      padding: 8px;
+      background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
+      background-size: 200% 200%;
+      animation: borderGlow 6s ease infinite;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .host-cam-box .cam-window {
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.06);
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Etiqueta de nombre común */
+    .name-tag-custom {
+      position: absolute;
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #0d0d0d 0%, #2a0000 50%, #0d0d0d 100%);
+      border: 2.5px solid #C0392B;
+      border-radius: 14px;
+      padding: 6px 28px;
+      min-width: 260px;
+      text-align: center;
+      box-shadow: 0 6px 25px rgba(0, 0, 0, 0.9), 0 0 15px rgba(192, 57, 43, 0.4);
+      z-index: 5;
+      white-space: nowrap;
+    }
+
+    .name-tag-custom .role-title {
+      color: #E74C3C;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .name-tag-custom .user-name {
+      color: #FFFFFF;
+      font-size: 20px;
+      font-weight: 800;
+      margin-top: 2px;
+      letter-spacing: 1px;
+    }
+
+    /* Ticker inferior adaptado */
+    .ticker-bar-vertical {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      height: 60px;
+      background: linear-gradient(90deg, #0d0d0d 0%, #1a0000 40%, #0d0d0d 100%);
+      border: 2px solid #C0392B;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 20;
+      box-shadow: 0 0 20px rgba(139, 0, 0, 0.6), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+    }
+
+    .ticker-bar-vertical .ticker-label {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #8B0000, #C0392B);
+      color: #FFD700;
+      font-weight: 900;
+      font-size: 16px;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-right: 2px solid #FFD700;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .ticker-bar-vertical .ticker-content {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Marco General Animado -->
+  <div class="main-border">
+    <div class="main-inner">
+
+      <!-- Encabezado / Titulo -->
+      <div class="top-header">
+        <span class="badge">● EN VIVO</span>
+        <span data-bind="host-name">Guta Flores</span>
+      </div>
+
+      <!-- Estrutura Principal Vertical -->
+      <div class="vertical-layout">
+
+        <!-- 1. SECCIÓN INVITADO (PROTAGONISTA - VERTICAL 9:16 + TARJETA RRSS) -->
+        <div class="guest-section">
+          
+          <!-- Marco Invitado (9:16 Vertical para VDO.Ninja) -->
+          <div class="guest-cam-box">
+            <div class="cam-window"></div>
+            <div class="name-tag-custom">
+              <div class="role-title" data-bind="guest-role">💬 INVITADO ESPECIAL</div>
+              <div class="user-name" data-bind="guest-name">GRUPO VIENTO ANDINO</div>
+            </div>
+          </div>
+
+          <!-- Panel de Redes / Info del Invitado -->
+          <div class="guest-info-panel">
+            <div class="info-header">
+              <div class="info-tag">✨ INFO & REDES</div>
+              <div class="info-title" data-bind="guest-name">VIENTO ANDINO</div>
+            </div>
+
+            <div class="social-list" data-bind="guest-socials">
+              <div class="social-item">
+                <span class="social-icon">📸</span>
+                <div class="social-text">
+                  <span class="social-platform">Instagram</span>
+                  <span class="social-handle">@vientoandinooficial</span>
+                </div>
+              </div>
+
+              <div class="social-item">
+                <span class="social-icon">🎵</span>
+                <div class="social-text">
+                  <span class="social-platform">Spotify / YouTube</span>
+                  <span class="social-handle">Viento Andino</span>
+                </div>
+              </div>
+
+              <div class="social-item">
+                <span class="social-icon">🌐</span>
+                <div class="social-text">
+                  <span class="social-platform">TikTok</span>
+                  <span class="social-handle">@viento.andino</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="guest-bio" data-bind="guest-bio">
+              🎶 Agrupación folklórica argentina. Presentando su nuevo material discográfico en vivo.
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 2. SECCIÓN ANFITRIÓN / HOST (CAM HORIZONTAL 16:9) -->
+        <div class="host-section">
+          <div class="host-cam-box">
+            <div class="cam-window"></div>
+            <div class="name-tag-custom">
+              <div class="role-title" data-bind="host-role">🎙️ ANFITRIÓN / HOST</div>
+              <div class="user-name" data-bind="host-name">GUTA FLORES</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="corner-stripe-left"></div>
+      <div class="corner-stripe-right"></div>
+
+      <!-- TICKER — Texto animado destacado -->
+      <div class="ticker-bar-vertical">
+        <div class="ticker-label">
+          <span class="ticker-dot"></span>
+          ✨ DESTACADO
+        </div>
+        <div class="ticker-track">
+          <div class="ticker-content" data-bind="ticker-content">
+            🎙️ Conducción: <span class="highlight">GUTA FLORES</span>
+            <span class="sep">◆</span>
+            💬 Invitado de hoy: <span class="highlight">GRUPO VIENTO ANDINO</span>
+            <span class="sep">◆</span>
+            🌟 ¡Gracias por acompañarnos!
+            <span class="sep">◆</span>
+            📲 Seguinos en redes: <span class="highlight">@gutaflores</span>
+            <span class="sep">◆</span>
+            🎶 Música en vivo todos los sábados
+            <span class="sep">◆</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script-overlay.js"></script>
+</body>
+</html>
