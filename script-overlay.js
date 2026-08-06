@@ -98,8 +98,9 @@
         // Redes sociales del invitado
         document.querySelectorAll('[data-bind="guest-socials"]').forEach(container => {
           if (Array.isArray(data.guest.socials)) {
-            const validSocials = data.guest.socials.filter(s => s.platform || s.handle);
+            const validSocials = data.guest.socials.filter(s => (s.platform && s.platform.trim() !== '') || (s.handle && s.handle.trim() !== ''));
             if (validSocials.length > 0) {
+              container.style.display = '';
               container.innerHTML = validSocials.map(s => `
                 <div class="social-item">
                   <span class="social-icon">${s.icon || '🌐'}</span>
@@ -109,7 +110,22 @@
                   </div>
                 </div>
               `).join('');
+            } else {
+              container.innerHTML = '';
             }
+          } else {
+            container.innerHTML = '';
+          }
+        });
+
+        // Si no hay redes ni bio cargadas, ocultar la tarjeta .guest-info-panel en overlay-vertical.html
+        const hasSocials = data.guest.socials && data.guest.socials.some(s => (s.platform && s.platform.trim() !== '') || (s.handle && s.handle.trim() !== ''));
+        const hasBio = data.guest.bio && data.guest.bio.trim() !== '';
+        document.querySelectorAll('.guest-info-panel').forEach(panel => {
+          if (!hasSocials && !hasBio) {
+            panel.style.display = 'none';
+          } else if (guestEnabled) {
+            panel.style.display = '';
           }
         });
       }

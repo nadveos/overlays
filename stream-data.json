@@ -4,8 +4,8 @@
     "role": ""
   },
   "guest": {
-    "enabled": false,
-    "name": "",
+    "enabled": true,
+    "name": "Raúl Domingo",
     "role": "",
     "bio": "",
     "socials": [
