@@ -92,6 +92,10 @@
         document.querySelectorAll('[data-bind="guest-bio"]').forEach(el => {
           if (data.guest.bio && data.guest.bio.trim() !== '') {
             el.textContent = data.guest.bio;
+            el.style.display = '';
+          } else {
+            el.textContent = '';
+            el.style.display = 'none';
           }
         });
 
@@ -112,20 +116,32 @@
               `).join('');
             } else {
               container.innerHTML = '';
+              container.style.display = 'none';
             }
           } else {
             container.innerHTML = '';
+            container.style.display = 'none';
           }
         });
 
-        // Si no hay redes ni bio cargadas, ocultar la tarjeta .guest-info-panel en overlay-vertical.html
+        // Manejo del panel lateral .guest-info-panel en overlay-vertical.html
         const hasSocials = data.guest.socials && data.guest.socials.some(s => (s.platform && s.platform.trim() !== '') || (s.handle && s.handle.trim() !== ''));
         const hasBio = data.guest.bio && data.guest.bio.trim() !== '';
+
         document.querySelectorAll('.guest-info-panel').forEach(panel => {
           if (!hasSocials && !hasBio) {
+            // Si no hay ni redes ni bio, ocultamos el panel lateral por completo (y el flex centrará la cámara)
             panel.style.display = 'none';
           } else if (guestEnabled) {
-            panel.style.display = '';
+            panel.style.display = 'flex';
+            // Ajustar la distribución del flexbox según haya redes o no
+            if (!hasSocials && hasBio) {
+              panel.style.justifyContent = 'flex-start';
+              panel.style.gap = '20px';
+            } else {
+              panel.style.justifyContent = 'space-between';
+              panel.style.gap = '';
+            }
           }
         });
       }
