@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "@playwright/browser-chromium": "^1.62.1",
     "playwright-core": "^1.62.1"

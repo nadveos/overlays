@@ -1,9 +1,10 @@
 {
   "host": {
     "name": "Guta Flores",
-    "role": "Hoster"
+    "role": ""
   },
   "guest": {
+    "enabled": false,
     "name": "",
     "role": "",
     "bio": "",
@@ -29,11 +30,6 @@
     {
       "prefix": "ALITAS : GUTA.FLORES",
       "text": "ALITAS : GUTA.FLORES",
-      "highlight": true
-    },
-    {
-      "prefix": "Auspiciantes: Corralón del Rosario - Autoservicios La Ruta - Milonguita Dev - ARCNOA",
-      "text": "",
       "highlight": true
     }
   ]
