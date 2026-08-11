@@ -1,18 +1,26 @@
-# Dependencias
-node_modules/
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Carpetas con archivos locales/privados
-render/
-invited-artists/
+node_modules
+dist
+dist-ssr
+*.local
 
-# Archivos de render e imágenes generadas
-*.png
-*.webm
-*.exe
-
-# Archivos temporales y de texto de notas
-*.txt
-
-# Archivos de sistema
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
 .DS_Store
-Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+render/
