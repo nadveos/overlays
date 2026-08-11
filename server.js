@@ -41,11 +41,21 @@ app.post('/api/save-data', (req, res) => {
   }
 });
 
+app.get('/api/overlays', (req, res) => {
+  res.json([
+    { key: 'overlay_9x16_vertical_solo', name: '9:16 Vertical Solo', path: '/overlay-solo-vertical' },
+    { key: 'overlay_9x16_vertical', name: '9:16 Vertical Dúo', path: '/overlay-vertical' },
+    { key: 'overlay_16x9_principal', name: '16:9 Principal', path: '/overlay' },
+    { key: 'transition', name: 'Transición', path: '/transition' },
+    { key: 'invitacion', name: 'Invitación Digital', path: '/invitacion' }
+  ]);
+});
+
 // Servir los archivos estáticos generados por el build de React
 const DIST_DIR = path.join(__dirname, 'dist');
 if (fs.existsSync(DIST_DIR)) {
   app.use(express.static(DIST_DIR));
-  app.get('*', (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.join(DIST_DIR, 'index.html'));
   });
 }
