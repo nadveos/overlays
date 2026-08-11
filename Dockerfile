@@ -1,24 +1,9 @@
-FROM node:20-alpine AS builder
+FROM nginx:alpine
 
-WORKDIR /app
+# Copiar todos los archivos HTML y CSS al directorio raíz de nginx
+COPY *.html /usr/share/nginx/html/
+COPY *.css /usr/share/nginx/html/
+COPY *.json /usr/share/nginx/html/
 
-COPY package*.json ./
-RUN npm ci
+EXPOSE 80
 
-COPY . .
-RUN npm run build
-
-FROM node:20-alpine AS runner
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/server.js ./
-COPY --from=builder /app/data ./data
-
-EXPOSE 3000
-
-CMD ["node", "server.js"]
