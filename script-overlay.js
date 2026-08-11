@@ -146,7 +146,87 @@
         });
       }
 
-      // 3. TICKER / DESTACADO
+      // 4. MODO SOLO DINÁMICO (solo-name, solo-role, solo-bio, solo-handle, solo-socials)
+      // Si hay invitado habilitado con nombre, usa sus datos. Si no, usa los del Host.
+      const activeName = guestEnabled ? data.guest.name : (data.host && data.host.name ? data.host.name : 'GUTA FLORES');
+      const activeRole = guestEnabled ? (data.guest.role || '💬 INVITADO ESPECIAL') : (data.host && data.host.role ? data.host.role : '🎙️ ANFITRIÓN / HOST');
+
+      document.querySelectorAll('[data-bind="solo-name"]').forEach(el => {
+        if (activeName && activeName.trim() !== '') el.textContent = activeName;
+      });
+
+      document.querySelectorAll('[data-bind="solo-role"]').forEach(el => {
+        if (activeRole && activeRole.trim() !== '') el.textContent = activeRole;
+      });
+
+      // Bio / Descripción
+      document.querySelectorAll('[data-bind="solo-bio"]').forEach(el => {
+        if (guestEnabled && data.guest.bio && data.guest.bio.trim() !== '') {
+          el.textContent = data.guest.bio;
+        } else if (!guestEnabled) {
+          el.textContent = '¡Bienvenidos al stream en vivo! Música argentina, folklore y mucho entretenimiento con Guta Flores.';
+        }
+      });
+
+      // Etiqueta de descripción ("✨ SOBRE EL INVITADO" o "📢 HOY EN EL STREAM")
+      document.querySelectorAll('[data-bind="solo-desc-label"]').forEach(el => {
+        el.textContent = guestEnabled ? '✨ SOBRE EL INVITADO' : '📢 HOY EN EL STREAM';
+      });
+
+      // Handle o usuario principal
+      let primaryHandle = '@gutaflores';
+      if (guestEnabled && data.guest.socials) {
+        const firstSoc = data.guest.socials.find(s => s.handle && s.handle.trim() !== '');
+        if (firstSoc) primaryHandle = firstSoc.handle;
+      }
+      document.querySelectorAll('[data-bind="solo-handle"]').forEach(el => {
+        el.textContent = primaryHandle;
+      });
+
+      // Lista de Redes Sociales
+      document.querySelectorAll('[data-bind="solo-socials"]').forEach(container => {
+        if (guestEnabled && data.guest.socials) {
+          const validSocials = data.guest.socials.filter(s => (s.platform && s.platform.trim() !== '') || (s.handle && s.handle.trim() !== ''));
+          if (validSocials.length > 0) {
+            container.innerHTML = validSocials.map(s => `
+              <div class="social-row">
+                <span class="social-icon">${s.icon || '🌐'}</span>
+                <div class="social-info">
+                  <span class="social-platform">${s.platform || ''}</span>
+                  <span class="social-handle">${s.handle || ''}</span>
+                </div>
+              </div>
+            `).join('');
+            return;
+          }
+        }
+        // Fallback a las redes del Host
+        container.innerHTML = `
+          <div class="social-row">
+            <span class="social-icon">📸</span>
+            <div class="social-info">
+              <span class="social-platform">Instagram</span>
+              <span class="social-handle">@gutaflores</span>
+            </div>
+          </div>
+          <div class="social-row">
+            <span class="social-icon">🎵</span>
+            <div class="social-info">
+              <span class="social-platform">TikTok</span>
+              <span class="social-handle">@gutaflores</span>
+            </div>
+          </div>
+          <div class="social-row">
+            <span class="social-icon">▶️</span>
+            <div class="social-info">
+              <span class="social-platform">YouTube</span>
+              <span class="social-handle">@gutaflores</span>
+            </div>
+          </div>
+        `;
+      });
+
+      // 5. TICKER / DESTACADO
       if (Array.isArray(data.ticker) && data.ticker.length > 0) {
         const isSingle = data.ticker.length === 1;
 

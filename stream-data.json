@@ -10,25 +10,25 @@
     "bio": "",
     "socials": [
       {
-        "icon": "",
-        "platform": "",
+        "icon": "♪",
+        "platform": "TikTok",
+        "handle": "@rauldomingooficial"
+      },
+      {
+        "icon": "🅾",
+        "platform": "Instagram ",
         "handle": ""
       },
       {
-        "icon": "",
-        "platform": "",
-        "handle": ""
-      },
-      {
-        "icon": "",
-        "platform": "",
+        "icon": "🅾",
+        "platform": "Facebook",
         "handle": ""
       }
     ]
   },
   "ticker": [
     {
-      "prefix": "ALITAS : GUTA.FLORES",
+      "prefix": "CHARLANDO CON RAÚL DOMINGO",
       "text": "ALITAS : GUTA.FLORES",
       "highlight": true
     }

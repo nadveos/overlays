@@ -9,6 +9,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright-core');
+const { Jimp } = require('jimp');
 
 let PORT = 3000;
 const DIR = __dirname;
@@ -29,15 +30,19 @@ const MIME_TYPES = {
 
 // Overlays disponibles
 const OVERLAY_CONFIGS = {
-  'overlay_16x9_principal':     { file: 'overlay.html',               width: 1920, height: 1080 },
-  'overlay_16x9_solo':          { file: 'overlay-solo.html',          width: 1920, height: 1080 },
-  'overlay_16x9_multimedia':    { file: 'overlay-multimedia.html',    width: 1920, height: 1080 },
-  'overlay_16x9_invitado':      { file: 'overlay-invitado.html',      width: 1920, height: 1080 },
-  'overlay_9x16_vertical':      { file: 'overlay-vertical.html',      width: 1080, height: 1920 },
-  'overlay_9x16_vertical_solo': { file: 'overlay-solo-vertical.html', width: 1080, height: 1920 },
-  'transition':                 { file: 'transition.html',             width: 1920, height: 1080 },
-  'pronto_empezamos':           { file: 'pronto-empezamos.html',       width: 1920, height: 1080 },
-  'offline':                    { file: 'offline.html',                width: 1920, height: 1080 },
+  'overlay_16x9_principal':        { file: 'overlay.html',               width: 1920, height: 1080 },
+  'overlay_16x9_solo':             { file: 'overlay-solo.html',          width: 1920, height: 1080 },
+  'overlay_16x9_multimedia':       { file: 'overlay-multimedia.html',    width: 1920, height: 1080 },
+  'overlay_16x9_invitado':         { file: 'overlay-invitado.html',      width: 1920, height: 1080 },
+  'overlay_9x16_vertical':         { file: 'overlay-vertical.html',      width: 1080, height: 1920 },
+  'overlay_9x16_vertical_solo':    { file: 'overlay-solo-vertical.html', width: 1080, height: 1920 },
+  'transition':                    { file: 'transition.html',            width: 1920, height: 1080 },
+  'transition_vertical':           { file: 'transition-vertical.html',   width: 1080, height: 1920 },
+  'pronto_empezamos':              { file: 'pronto-empezamos.html',      width: 1920, height: 1080 },
+  'pronto_empezamos_9x16':         { file: 'pronto-empezamos.html',      width: 1080, height: 1920 },
+  'offline':                       { file: 'offline.html',               width: 1920, height: 1080 },
+  'animation_9x16':                { file: 'animation.html',             width: 1080, height: 1920 },
+  'animation_1_9x16':              { file: 'animation-1.html',           width: 1080, height: 1920 },
 };
 
 async function captureOverlay(overlayKey) {
@@ -56,26 +61,59 @@ async function captureOverlay(overlayKey) {
     const url = `http://localhost:${PORT}/${config.file}`;
     await page.goto(url, { waitUntil: 'networkidle' });
 
-    // Vaciar únicamente el interior de las ventanas de cámara
-    await page.evaluate(() => {
+    // Esperar a que las fuentes y datos dinámicos del panel estén cargados
+    await page.evaluate(async () => {
       document.documentElement.style.background = 'transparent';
       document.body.style.background = 'transparent';
+      document.body.classList.add('static-capture');
 
-      document.querySelectorAll('.cam-window, .mm-window').forEach(win => {
-        win.style.background = 'transparent';
-        win.style.backgroundColor = 'transparent';
-        win.style.borderColor = 'transparent';
-        win.innerHTML = '';
-      });
-
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
       document.querySelectorAll('.mm-placeholder').forEach(ph => {
         ph.style.display = 'none';
       });
+    });
+    await page.waitForTimeout(500);
+
+    // Get bounding boxes of all camera/multimedia windows before screenshot
+    const camRects = await page.evaluate(() => {
+      const rects = [];
+      document.querySelectorAll('.cam-window, .mm-window').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.width > 0 && r.height > 0) {
+          rects.push({
+            x: Math.round(r.left),
+            y: Math.round(r.top),
+            w: Math.round(r.width),
+            h: Math.round(r.height)
+          });
+        }
+      });
+      return rects;
     });
 
     const outputFilename = overlayKey + '.png';
     const outputPath = path.join(renderDir, outputFilename);
     await page.screenshot({ path: outputPath, omitBackground: true, fullPage: true });
+
+    // Post-process: erase interior of each camera frame to alpha=0
+    if (camRects.length > 0) {
+      const img = await Jimp.read(outputPath);
+      const inset = 7;
+      for (const rect of camRects) {
+        const x = rect.x + inset;
+        const y = rect.y + inset;
+        const w = Math.max(0, rect.w - inset * 2);
+        const h = Math.max(0, rect.h - inset * 2);
+        for (let py = y; py < y + h; py++) {
+          for (let px = x; px < x + w; px++) {
+            img.setPixelColor(0x00000000, px, py);
+          }
+        }
+      }
+      await img.write(outputPath);
+    }
 
     return outputPath;
   } finally {
@@ -90,11 +128,19 @@ async function recordVideo(overlayKey, durationMs = 5000) {
   const renderDir = path.join(DIR, 'render');
   if (!fs.existsSync(renderDir)) fs.mkdirSync(renderDir, { recursive: true });
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({
+    headless: true,
+    args: [
+      '--force-device-scale-factor=2',
+      '--enable-font-antialiasing',
+      '--font-render-hinting=medium',
+      '--disable-gpu-vsync'
+    ]
+  });
   try {
     const context = await browser.newContext({
       viewport: { width: config.width, height: config.height },
-      deviceScaleFactor: 1,
+      deviceScaleFactor: 2,
       recordVideo: {
         dir: renderDir,
         size: { width: config.width, height: config.height }
@@ -104,6 +150,16 @@ async function recordVideo(overlayKey, durationMs = 5000) {
     const page = await context.newPage();
     const url = `http://localhost:${PORT}/${config.file}`;
     await page.goto(url, { waitUntil: 'networkidle' });
+
+    // Esperar a que las fuentes web (Google Fonts) estén 100% cargadas y renderizadas
+    await page.evaluate(async () => {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+    });
+
+    // Dar 1.5 segundos para que los datos del script-overlay.js se apliquen y las animaciones inicien suavemente
+    await page.waitForTimeout(1500);
 
     console.log(`🎥 Grabando video WebM de ${config.file} (${durationMs / 1000}s)...`);
     await page.waitForTimeout(durationMs);

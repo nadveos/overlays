@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="main.css">
-  <title>Guta Flores — Overlay Solo Vertical (1080x1920)</title>
+  <title>Guta Flores — Overlay Solo Vertical 9:16 (Mejorado)</title>
   <style>
-    /* Adaptaciones específicas para Formato Solo Vertical (1080x1920) */
-    html, body {
+    /* ============================================================
+       FORMATO SOLO VERTICAL — 1080x1920 (9:16)
+       Vista de cámara única con zonas para texto y multimedia
+       ============================================================ */
+    html,
+    body {
       width: 1080px;
       height: 1920px;
       overflow: hidden;
@@ -15,104 +20,498 @@
     .main-border {
       width: 1080px;
       height: 1920px;
-      padding: 16px;
+      padding: 14px;
     }
 
-    /* Header superior */
+    /* ============================================================
+       HEADER SUPERIOR
+       ============================================================ */
     .top-header {
-      top: 40px;
-      font-size: 28px;
+      top: 32px;
+      font-size: 26px;
       padding: 14px 52px;
       border-radius: 40px;
     }
 
     .top-header .badge {
-      font-size: 18px;
+      font-size: 17px;
       padding: 6px 18px;
       border-radius: 20px;
     }
 
-    /* LAYOUT MODO SOLO VERTICAL */
-    .solo-vertical-layout {
+    /* ============================================================
+       LAYOUT PRINCIPAL 9:16
+       ┌─────────────────────────────────────┐
+       │  [HEADER — EN VIVO / GUTA FLORES]   │
+       ├─────────────────────────────────────┤
+       │                                     │
+       │   [ZONA MULTIMEDIA / TEXTO TOP]     │  ~10% altura
+       │                                     │
+       ├─────────────────────────────────────┤
+       │                                     │
+       │                                     │
+       │         [CÁMARA PRINCIPAL]          │  ~55% altura
+       │           (transparente)            │
+       │                                     │
+       │                                     │
+       ├─────────────────────────────────────┤
+       │       [NOMBRE / NAME TAG]           │
+       ├─────────────────────────────────────┤
+       │   [ZONA TEXTO / INFO / SOCIALES]    │  ~18% altura
+       ├─────────────────────────────────────┤
+       │         [TICKER INFERIOR]           │
+       └─────────────────────────────────────┘
+       ============================================================ */
+    .solo-layout {
       position: absolute;
-      top: 140px;
-      left: 28px;
-      right: 28px;
-      bottom: 110px;
+      top: 130px;
+      left: 20px;
+      right: 20px;
+      bottom: 100px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      gap: 0;
     }
 
-    /* Contenedor Cámara Solo (9:16 Vertical Completo) */
-    .solo-cam-box {
-      width: 100%;
-      height: 100%;
-      max-height: 1600px;
+    /* ============================================================
+       ZONA MULTIMEDIA / TEXTO SUPERIOR
+       Para mostrar logo del evento, título del stream, imagen, etc.
+       ============================================================ */
+    .top-info-zone {
+      flex: 0 0 auto;
+      height: 180px;
+      background: rgba(10, 10, 10, 0.75);
+      border: 1.5px solid rgba(192, 57, 43, 0.4);
+      border-radius: 20px 20px 0 0;
+      border-bottom: none;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      backdrop-filter: blur(6px);
       position: relative;
-      border-radius: 24px;
-      padding: 10px;
-      background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #FFD700, #8B0000);
-      background-size: 300% 300%;
-      animation: borderGlow 6s ease infinite;
-      box-shadow:
-        0 0 50px rgba(139, 0, 0, 0.6),
-        0 0 100px rgba(139, 0, 0, 0.25),
-        0 25px 50px rgba(0, 0, 0, 0.9);
+      overflow: hidden;
+    }
+
+    .top-info-zone::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg,
+          rgba(139, 0, 0, 0.15) 0%,
+          transparent 40%,
+          transparent 60%,
+          rgba(139, 0, 0, 0.15) 100%);
+      pointer-events: none;
+    }
+
+    .event-badge {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #8B0000, #C0392B);
+      border-radius: 14px;
+      padding: 10px 20px;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(192, 57, 43, 0.5);
+    }
+
+    .event-badge .badge-icon {
+      font-size: 32px;
+      line-height: 1;
+    }
+
+    .event-badge .badge-label {
+      font-size: 12px;
+      font-weight: 900;
+      color: #FFD700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .event-info {
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .event-title {
+      font-size: 36px;
+      font-weight: 900;
+      color: #FFFFFF;
+      letter-spacing: 2px;
+      line-height: 1.1;
+      text-shadow: 0 0 20px rgba(192, 57, 43, 0.6);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .event-subtitle {
+      font-size: 18px;
+      font-weight: 600;
+      color: #FFD700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    .event-date {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.55);
+      letter-spacing: 2px;
+      margin-top: 6px;
+    }
+
+    /* Separador decorativo superior-cámara */
+    .zone-separator {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          #8B0000 15%,
+          #C0392B 35%,
+          #FFD700 50%,
+          #C0392B 65%,
+          #8B0000 85%,
+          transparent 100%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       ZONA DE CÁMARA PRINCIPAL (transparente)
+       ============================================================ */
+    .cam-zone {
+      flex: 1;
+      position: relative;
+      background: transparent;
+      min-height: 0;
+    }
+
+    .solo-cam-box {
+      position: absolute;
+      inset: 0;
+      background: transparent;
+      border-left: 3px solid rgba(139, 0, 0, 0.5);
+      border-right: 3px solid rgba(139, 0, 0, 0.5);
     }
 
     .solo-cam-box .cam-window {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 100px;
+      background: transparent;
+      border-radius: 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Borde animado en la cámara */
+    .solo-cam-box::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-left: 3px solid transparent;
+      border-right: 3px solid transparent;
+      background: linear-gradient(180deg,
+          rgba(192, 57, 43, 0.8) 0%,
+          transparent 8%,
+          transparent 92%,
+          rgba(192, 57, 43, 0.8) 100%);
+      pointer-events: none;
+    }
+
+    /* Esquinas internas de la cámara */
+    .cam-corner {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      z-index: 3;
+    }
+
+    .cam-corner svg {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.05);
-      border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      fill: none;
+      stroke: #C0392B;
+      stroke-width: 3;
+      filter: drop-shadow(0 0 6px rgba(192, 57, 43, 0.8));
     }
 
-    /* Etiqueta de Nombre Grande para Vertical Solo */
-    .name-tag-vertical-solo {
+    .cam-corner.tl {
+      top: 16px;
+      left: 16px;
+    }
+
+    .cam-corner.tr {
+      top: 16px;
+      right: 16px;
+      transform: scaleX(-1);
+    }
+
+    .cam-corner.bl {
+      bottom: 16px;
+      left: 16px;
+      transform: scaleY(-1);
+    }
+
+    .cam-corner.br {
+      bottom: 16px;
+      right: 16px;
+      transform: scale(-1);
+    }
+
+    /* Indicador de cámara en vivo (top-left) */
+    .live-indicator {
       position: absolute;
-      bottom: -28px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, #0d0d0d 0%, #2a0000 50%, #0d0d0d 100%);
-      border: 3px solid #C0392B;
-      border-radius: 16px;
-      padding: 10px 48px;
-      text-align: center;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.95), 0 0 20px rgba(192, 57, 43, 0.5);
-      white-space: nowrap;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 1.5px solid #C0392B;
+      border-radius: 20px;
+      padding: 6px 16px;
       z-index: 5;
+      backdrop-filter: blur(4px);
     }
 
-    .name-tag-vertical-solo .role-title {
-      color: #E74C3C;
-      font-size: 15px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 3px;
+    .live-dot {
+      width: 10px;
+      height: 10px;
+      background: #E74C3C;
+      border-radius: 50%;
+      animation: livePulse 1.4s ease infinite;
     }
 
-    .name-tag-vertical-solo .user-name {
-      color: #FFFFFF;
-      font-size: 28px;
+    @keyframes livePulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7);
+      }
+
+      50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 5px rgba(231, 76, 60, 0);
+      }
+    }
+
+    .live-text {
+      font-size: 14px;
       font-weight: 900;
-      margin-top: 2px;
+      color: #FFFFFF;
       letter-spacing: 2px;
-      text-shadow: 0 0 20px rgba(192, 57, 43, 0.6);
+      text-transform: uppercase;
     }
 
-    /* Ticker inferior adaptado para Vertical */
-    .ticker-bar-vertical {
+    /* ============================================================
+       NAME TAG — Nombre del streamer sobre la cámara (abajo)
+       ============================================================ */
+    .name-tag-overlay {
       position: absolute;
-      bottom: 24px;
-      left: 24px;
-      right: 24px;
-      height: 64px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg,
+          transparent 0%,
+          rgba(10, 5, 5, 0.85) 40%,
+          rgba(15, 5, 5, 0.97) 100%);
+      padding: 60px 32px 24px 32px;
+      z-index: 4;
+    }
+
+    .name-role {
+      font-size: 16px;
+      font-weight: 800;
+      color: #E74C3C;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .name-main {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      color: #FFFFFF;
+      letter-spacing: 8px;
+      line-height: 1;
+      text-shadow:
+        0 0 20px rgba(192, 57, 43, 0.7),
+        0 2px 8px rgba(0, 0, 0, 0.9);
+    }
+
+    .name-social {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 2px;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
+
+    /* ============================================================
+       ZONA DE TEXTO / INFO INFERIOR
+       Para descripción del stream, tema, redes sociales, etc.
+       ============================================================ */
+    .bottom-info-zone {
+      flex: 0 0 auto;
+      height: 320px;
+      background: rgba(10, 10, 10, 0.88);
+      border: 1.5px solid rgba(192, 57, 43, 0.4);
+      border-radius: 0 0 20px 20px;
+      border-top: none;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      backdrop-filter: blur(8px);
+    }
+
+    .bottom-separator {
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg,
+          transparent 0%,
+          #8B0000 15%,
+          #C0392B 35%,
+          #FFD700 50%,
+          #C0392B 65%,
+          #8B0000 85%,
+          transparent 100%);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      flex-shrink: 0;
+    }
+
+    .bottom-content {
+      flex: 1;
+      padding: 20px 32px;
+      display: flex;
+      gap: 24px;
+      align-items: stretch;
+      overflow: hidden;
+    }
+
+    /* Columna izquierda: descripción del stream */
+    .stream-desc {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .desc-label {
+      font-size: 13px;
+      font-weight: 900;
+      color: #C0392B;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .desc-text {
+      font-size: 22px;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.9);
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .desc-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .desc-tag {
+      background: rgba(139, 0, 0, 0.3);
+      border: 1px solid rgba(192, 57, 43, 0.5);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #FFD700;
+      letter-spacing: 1px;
+    }
+
+    /* Divisor vertical interno */
+    .inner-divider {
+      width: 2px;
+      background: linear-gradient(180deg,
+          transparent 0%,
+          rgba(192, 57, 43, 0.6) 20%,
+          #C0392B 50%,
+          rgba(192, 57, 43, 0.6) 80%,
+          transparent 100%);
+      flex-shrink: 0;
+    }
+
+    /* Columna derecha: redes sociales */
+    .social-zone {
+      flex: 0 0 280px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .social-zone-label {
+      font-size: 13px;
+      font-weight: 900;
+      color: #C0392B;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .social-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(192, 57, 43, 0.3);
+      border-radius: 12px;
+      padding: 10px 14px;
+    }
+
+    .social-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .social-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .social-platform {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.45);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .social-handle {
+      font-size: 17px;
+      color: #FFFFFF;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* ============================================================
+       TICKER INFERIOR
+       ============================================================ */
+    .ticker-bar-v {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      height: 68px;
       background: linear-gradient(90deg, #0d0d0d 0%, #1a0000 40%, #0d0d0d 100%);
       border: 2px solid #C0392B;
-      border-radius: 12px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -120,12 +519,12 @@
       box-shadow: 0 0 24px rgba(139, 0, 0, 0.6), inset 0 1px 0 rgba(255, 215, 0, 0.15);
     }
 
-    .ticker-bar-vertical .ticker-label {
+    .ticker-bar-v .ticker-label {
       flex-shrink: 0;
       background: linear-gradient(135deg, #8B0000, #C0392B);
       color: #FFD700;
       font-weight: 900;
-      font-size: 17px;
+      font-size: 16px;
       padding: 0 22px;
       height: 100%;
       display: flex;
@@ -137,41 +536,268 @@
       white-space: nowrap;
     }
 
-    .ticker-bar-vertical .ticker-content {
+    .ticker-bar-v .ticker-content {
       font-size: 22px;
       font-weight: 600;
     }
+
+    /* ============================================================
+       MULTIMEDIA ZONE — Zona alternativa (visible cuando se activa)
+       Reemplaza la zona de texto inferior con contenido multimedia
+       ============================================================ */
+    .multimedia-zone {
+      position: absolute;
+      bottom: 100px;
+      left: 20px;
+      right: 20px;
+      height: 340px;
+      background: rgba(8, 8, 8, 0.9);
+      border: 2px solid rgba(255, 215, 0, 0.35);
+      border-radius: 20px;
+      overflow: hidden;
+      display: none;
+      /* Activar con JS cuando se necesite multimedia */
+      backdrop-filter: blur(8px);
+    }
+
+    .mm-header-v {
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(192, 57, 43, 0.35);
+      background: rgba(20, 0, 0, 0.5);
+    }
+
+    .mm-badge-v {
+      background: linear-gradient(135deg, #1A1A1A, #2a0505);
+      border: 1.5px solid #FFD700;
+      border-radius: 20px;
+      color: #FFD700;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+    }
+
+    .mm-title-v {
+      color: rgba(255, 255, 255, 0.75);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    .mm-content-v {
+      width: 100%;
+      height: calc(100% - 56px);
+      background: transparent;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mm-placeholder-v {
+      text-align: center;
+      opacity: 0.2;
+    }
+
+    .mm-placeholder-v .icon {
+      font-size: 60px;
+    }
+
+    .mm-placeholder-v .label {
+      font-size: 14px;
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       ANIMACION DEL BORDE DEL MARCO GLOBAL
+       ============================================================ */
+    @keyframes borderGlow {
+      0% {
+        background-position: 0% 0%;
+      }
+
+      50% {
+        background-position: 100% 100%;
+      }
+
+      100% {
+        background-position: 0% 0%;
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <!-- Marco General Animado -->
   <div class="main-border">
     <div class="main-inner">
 
-      <!-- Encabezado / Título -->
+      <!-- HEADER: En Vivo / Nombre -->
       <div class="top-header">
         <span class="badge">● EN VIVO</span>
         <span data-bind="host-name">Guta Flores</span>
       </div>
 
-      <!-- Estructura Solo Vertical -->
-      <div class="solo-vertical-layout">
-        <div class="solo-cam-box">
-          <div class="cam-window"></div>
-          
-          <div class="name-tag-vertical-solo">
-            <div class="role-title" data-bind="host-role">🎙️ ANFITRIÓN / HOST</div>
-            <div class="user-name" data-bind="host-name">GUTA FLORES</div>
+      <!-- LAYOUT PRINCIPAL 9:16 -->
+      <div class="solo-layout">
+
+        <!-- 1. ZONA MULTIMEDIA / TEXTO SUPERIOR (evento, título, logo) -->
+        <div class="top-info-zone">
+          <div class="event-badge">
+            <div class="badge-icon">🎙️</div>
+            <div class="badge-label">STREAM</div>
+          </div>
+          <div class="event-info">
+            <div class="event-title" data-bind="stream-title">EN VIVO HOY</div>
+            <div class="event-subtitle" data-bind="stream-subtitle">Música y Folklore Argentino</div>
+            <div class="event-date" data-bind="stream-date">📅 Todos los días</div>
+          </div>
+        </div>
+
+        <!-- Separador superior -->
+        <div class="zone-separator"></div>
+
+        <!-- 2. ZONA DE CÁMARA PRINCIPAL (transparente — OBS captura la cámara) -->
+        <div class="cam-zone">
+          <div class="solo-cam-box">
+            <div class="cam-window"></div>
+
+            <!-- Esquinas decorativas de la cámara -->
+            <div class="cam-corner tl">
+              <svg viewBox="0 0 40 40">
+                <path d="M2 38 L2 2 L38 2" />
+              </svg>
+            </div>
+            <div class="cam-corner tr">
+              <svg viewBox="0 0 40 40">
+                <path d="M2 38 L2 2 L38 2" />
+              </svg>
+            </div>
+            <div class="cam-corner bl">
+              <svg viewBox="0 0 40 40">
+                <path d="M2 38 L2 2 L38 2" />
+              </svg>
+            </div>
+            <div class="cam-corner br">
+              <svg viewBox="0 0 40 40">
+                <path d="M2 38 L2 2 L38 2" />
+              </svg>
+            </div>
+
+            <!-- Indicador EN VIVO -->
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              <span class="live-text">EN VIVO</span>
+            </div>
+
+            <!-- Nombre sobre la cámara (degradado inferior) -->
+            <div class="name-tag-overlay">
+              <div class="name-role" data-bind="solo-role">🎙️ ANFITRIÓN / HOST</div>
+              <div class="name-main" data-bind="solo-name">GUTA FLORES</div>
+              <div class="name-social" data-bind="solo-handle">@gutafloresok</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- BANNER DE FRASES / MOTTO BANNER -->
+        <div class="motto-banner">
+          <div class="motto-text-group">
+            <span class="motto-phrase highlight">🎙️ DIFUNDIENDO ARTISTAS POCOS CONOCIDOS</span>
+            <span class="motto-connector">Y</span>
+            <span class="motto-phrase">GUITARREAMOS A LA GORRA 🪕</span>
+          </div>
+        </div>
+
+        <!-- Separador inferior -->
+        <div class="zone-separator"></div>
+
+        <!-- 3. ZONA TEXTO / INFO / SOCIALES -->
+        <div class="bottom-info-zone">
+          <div class="bottom-separator"></div>
+          <div class="bottom-content">
+
+            <!-- Descripción del stream -->
+            <div class="stream-desc">
+              <div class="desc-label" data-bind="solo-desc-label">📢 Hoy en el stream</div>
+              <div class="desc-text" data-bind="solo-bio">
+                ¡Bienvenidos al stream en vivo! Música argentina, folklore y mucho más.
+              </div>
+              <div class="desc-tags">
+                <span class="desc-tag">#Folklore</span>
+                <span class="desc-tag">#Musica</span>
+                <span class="desc-tag">#GuitarreandoALaGorra</span>
+                <span class="desc-tag">#EnVivo</span>
+                <span class="desc-tag">#ArgentinaMusic</span>
+              </div>
+            </div>
+
+            <!-- Divisor -->
+            <div class="inner-divider"></div>
+
+            <!-- Redes sociales -->
+            <div class="social-zone">
+              <div class="social-zone-label">🌐 Seguinos</div>
+              <div data-bind="solo-socials">
+                <div class="social-row">
+                  <span class="social-icon">📸</span>
+                  <div class="social-info">
+                    <span class="social-platform">Instagram</span>
+                    <span class="social-handle">@gutaflores</span>
+                  </div>
+                </div>
+                <div class="social-row">
+                  <span class="social-icon">🎵</span>
+                  <div class="social-info">
+                    <span class="social-platform">TikTok</span>
+                    <span class="social-handle">@gutaflores</span>
+                  </div>
+                </div>
+                <div class="social-row">
+                  <span class="social-icon">▶️</span>
+                  <div class="social-info">
+                    <span class="social-platform">YouTube</span>
+                    <span class="social-handle">@gutaflores</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Decoraciones de esquina del marco global -->
+      <div class="corner-stripe-left"></div>
+      <div class="corner-stripe-right"></div>
+
+      <!-- 4. ZONA MULTIMEDIA (activa con JS cuando se necesite — reemplaza zona inferior) -->
+      <div class="multimedia-zone" id="multimedia-zone">
+        <div class="mm-header-v">
+          <span class="mm-badge-v">🎬 MULTIMEDIA</span>
+          <span class="mm-title-v" data-bind="mm-title">VIDEO OFICIAL / PRESENTACIÓN</span>
+        </div>
+        <div class="mm-content-v">
+          <!-- OBS Browser Source mostrará contenido aquí -->
+          <div class="mm-placeholder-v">
+            <div class="icon">📺</div>
+            <div class="label">Contenido Multimedia</div>
           </div>
         </div>
       </div>
 
-      <div class="corner-stripe-left"></div>
-      <div class="corner-stripe-right"></div>
-
-      <!-- TICKER — Texto destacado animado (Sincronizado con Panel) -->
-      <div class="ticker-bar-vertical">
+      <!-- TICKER INFERIOR ANIMADO -->
+      <div class="ticker-bar-v">
         <div class="ticker-label">
           <span class="ticker-dot"></span>
           ✨ DESTACADO
@@ -186,6 +812,8 @@
             <span class="sep">◆</span>
             🎶 Música, folklore y entretenimiento en vivo
             <span class="sep">◆</span>
+            💬 ¡Dejá tu comentario y saludá!
+            <span class="sep">◆</span>
           </div>
         </div>
       </div>
@@ -195,4 +823,5 @@
 
   <script src="script-overlay.js"></script>
 </body>
+
 </html>

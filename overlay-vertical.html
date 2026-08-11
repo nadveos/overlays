@@ -56,23 +56,39 @@
 
     /* Marco del Invitado: Vertical (9:16) */
     .guest-cam-box {
-      flex: 0 0 680px; /* Ancho fijo para mantener ratio 9:16 en la altura correspondiente */
+      flex: 0 0 680px;
       height: 100%;
       position: relative;
+      border-radius: 20px;
+      background: transparent;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .guest-cam-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
       border-radius: 20px;
       padding: 8px;
       background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
       background-size: 200% 200%;
       animation: borderGlow 6s ease infinite;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
 
     .guest-cam-box .cam-window {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.06);
+      background: transparent;
       border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Panel Lateral de Información / RRSS del Invitado */
@@ -175,19 +191,35 @@
       aspect-ratio: 16 / 9;
       position: relative;
       border-radius: 20px;
+      background: transparent;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .host-cam-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
       padding: 8px;
       background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
       background-size: 200% 200%;
       animation: borderGlow 6s ease infinite;
-      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.9);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
     }
 
     .host-cam-box .cam-window {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.06);
+      background: transparent;
       border-radius: 14px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* Etiqueta de nombre común */
@@ -319,6 +351,15 @@
 
       <div class="corner-stripe-left"></div>
       <div class="corner-stripe-right"></div>
+
+      <!-- BANNER DE FRASES / MOTTO BANNER -->
+      <div class="motto-banner" style="position: absolute; bottom: 86px; left: 20px; right: 20px; width: auto; border-radius: 10px;">
+        <div class="motto-text-group">
+          <span class="motto-phrase highlight" style="font-size: 16px;">🎙️ DIFUNDIENDO ARTISTAS POCOS CONOCIDOS</span>
+          <span class="motto-connector" style="font-size: 18px; width: 28px; height: 28px;">Y</span>
+          <span class="motto-phrase" style="font-size: 16px;">GUITARREAMOS A LA GORRA 🪕</span>
+        </div>
+      </div>
 
       <!-- TICKER — Texto animado destacado -->
       <div class="ticker-bar-vertical">

@@ -66,6 +66,24 @@
       box-shadow: 0 4px 15px rgba(192, 57, 43, 0.4);
     }
     button:hover { background: linear-gradient(135deg, #A00000, #D63E2D); }
+    .btn-goto {
+      background: #1a4a1a !important;
+      box-shadow: 0 2px 8px rgba(0,180,0,0.3) !important;
+      border: 1px solid #2ecc71 !important;
+      color: #2ecc71 !important;
+      padding: 6px 12px !important;
+      font-size: 13px !important;
+      font-weight: 700 !important;
+      width: auto !important;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+    }
+    .btn-goto:hover { background: #225522 !important; }
     .toast {
       background: #27ae60;
       color: white;
@@ -153,7 +171,9 @@
       Genera capturas en formato <strong>PNG con fondo 100% transparente</strong> — ideal para TikTok Live Studio. Los marcos de las cámaras quedan vacíos para posicionarlas detrás.
     </p>
 
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+    <!-- ── Capturas PNG ── -->
+    <p style="font-size:11px; color:#888; margin-bottom:8px; font-weight:700; letter-spacing:1px;">📷 CAPTURAS PNG</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
       <button type="button" onclick="captureOverlay('overlay_16x9_principal')" style="background: #27ae60; font-size: 13px; padding: 10px;">
         📷 16:9 Principal
       </button>
@@ -173,13 +193,57 @@
         📱 9:16 Vertical Solo
       </button>
       <button type="button" onclick="captureOverlay('transition')" style="background: #2980b9; font-size: 13px; padding: 10px;">
-        ⚡ Capturar Transición
+        ⚡ PNG — Transición 16:9
+      </button>
+      <button type="button" onclick="captureOverlay('transition_vertical')" style="background: #5b3fa0; font-size: 13px; padding: 10px;">
+        ⚡ PNG — Transición 9:16
       </button>
       <button type="button" onclick="captureOverlay('pronto_empezamos')" style="background: #d35400; font-size: 13px; padding: 10px;">
-        📷 Pronto Empezamos (PNG)
+        📷 Pronto Empezamos
       </button>
-      <button type="button" onclick="recordWebmVideo('pronto_empezamos', 6000)" style="background: #e67e22; grid-column: span 2; font-size: 13px; padding: 12px; font-weight: 800;">
-        🎥 Grabar WebM (VP8/VP9) — Pronto Empezamos (6s)
+      <button type="button" onclick="captureOverlay('offline')" style="background: #555; font-size: 13px; padding: 10px;">
+        📷 Offline
+      </button>
+    </div>
+
+    <!-- ── Grabaciones WebM VP8/VP9 ── -->
+    <p style="font-size:11px; color:#e67e22; margin-bottom:8px; font-weight:700; letter-spacing:1px;">🎥 GRABACIONES WebM VP8/VP9 (ANIMADAS)</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px;">
+      <button type="button" onclick="recordWebmVideo('pronto_empezamos', 6000)" style="background: #e67e22; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — Pronto Empezamos 16:9 (6s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('pronto_empezamos_9x16', 6000)" style="background: #d35400; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — Pronto Empezamos 9:16 (6s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('transition', 3000)" style="background: #2980b9; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — Transición 16:9 (3s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('transition_vertical', 3000)" style="background: #5b3fa0; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — Transición 9:16 (3s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('animation_9x16', 4000)" style="background: #f43f5e; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — Animación Tap 9:16 (4s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('animation_1_9x16', 5000)" style="background: #be185d; font-size: 13px; padding: 12px; font-weight: 800; box-shadow: 0 4px 15px rgba(190, 24, 93, 0.5);">
+        🎥 WebM — Animación 1 (3D + Corazones) 9:16 (5s) ⭐ HQ
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_9x16_vertical_solo', 5000)" style="background: #8e44ad; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 9:16 Vertical Solo (5s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_9x16_vertical', 5000)" style="background: #8e44ad; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 9:16 Vertical (5s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_16x9_principal', 5000)" style="background: #27ae60; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 16:9 Principal (5s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_16x9_solo', 5000)" style="background: #27ae60; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 16:9 Solo (5s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_16x9_multimedia', 5000)" style="background: #27ae60; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 16:9 Multimedia (5s)
+      </button>
+      <button type="button" onclick="recordWebmVideo('overlay_16x9_invitado', 5000)" style="background: #27ae60; grid-column: span 2; font-size: 13px; padding: 12px; font-weight: 800;">
+        🎥 WebM — 16:9 Invitado (5s)
       </button>
     </div>
     <p style="font-size:11px; color:#666; text-align:center;">Los archivos se guardan en <code>render/</code> y se descargan automáticamente.</p>
@@ -191,42 +255,67 @@
       Copiá estas URLs en el Browser Source de OBS o TikTok Live Studio para que los overlays reciban los datos del panel en tiempo real.
     </p>
     <div style="display:flex; flex-direction:column; gap:6px;" id="obs-urls">
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px; overflow:hidden; text-overflow:ellipsis;">http://localhost:3000/overlay.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay.html')" style="background:#2980b9; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/overlay-solo.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay-solo.html')" style="background:#2980b9; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay-solo.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/overlay-multimedia.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay-multimedia.html')" style="background:#2980b9; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay-multimedia.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/overlay-invitado.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay-invitado.html')" style="background:#2980b9; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay-invitado.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/overlay-vertical.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay-vertical.html')" style="background:#8e44ad; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay-vertical.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/overlay-solo-vertical.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/overlay-solo-vertical.html')" style="background:#8e44ad; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/overlay-solo-vertical.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/pronto-empezamos.html</code>
-        <button type="button" onclick="copyUrl('http://localhost:3000/pronto-empezamos.html')" style="background:#d35400; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
-      </div>
-      <div style="display:flex; gap:6px; align-items:center;">
-        <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/offline.html</code>
-        <button type="button" onclick="copyUrl('http://localhost:3000/offline.html')" style="background:#d35400; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
-      </div>
+
       <div style="display:flex; gap:6px; align-items:center;">
         <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/transition.html</code>
         <button type="button" onclick="copyUrl('http://localhost:3000/transition.html')" style="background:#2980b9; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/transition.html" target="_blank" class="btn-goto">Ir →</a>
       </div>
+
+      <div style="display:flex; gap:6px; align-items:center;">
+        <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/transition-vertical.html</code>
+        <button type="button" onclick="copyUrl('http://localhost:3000/transition-vertical.html')" style="background:#5b3fa0; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/transition-vertical.html" target="_blank" class="btn-goto">Ir →</a>
+      </div>
+
+      <div style="display:flex; gap:6px; align-items:center;">
+        <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/pronto-empezamos.html</code>
+        <button type="button" onclick="copyUrl('http://localhost:3000/pronto-empezamos.html')" style="background:#d35400; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/pronto-empezamos.html" target="_blank" class="btn-goto">Ir →</a>
+      </div>
+
+      <div style="display:flex; gap:6px; align-items:center;">
+        <code style="background:#111; color:#4fc; flex:1; padding:6px 10px; border-radius:4px; font-size:12px;">http://localhost:3000/offline.html</code>
+        <button type="button" onclick="copyUrl('http://localhost:3000/offline.html')" style="background:#d35400; width:auto; padding:6px 12px; font-size:11px;">Copiar</button>
+        <a href="http://localhost:3000/offline.html" target="_blank" class="btn-goto">Ir →</a>
+      </div>
+
     </div>
   </div>
 

@@ -34,26 +34,42 @@
 
     .cam-solo-box {
       width: 100%;
-      aspect-ratio: 16 / 9;      /* Proporción 16:9 exacta para la webcam/stream del invitado */
+      aspect-ratio: 16 / 9;
       max-height: calc(100vh - 200px);
       position: relative;
       border-radius: 18px;
-      padding: 9px;
-      background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #FFD700, #8B0000);
-      background-size: 300% 300%;
-      animation: borderGlow 5s ease infinite;
+      background: transparent;
       box-shadow:
         0 0 40px rgba(139, 0, 0, 0.5),
         0 0 80px rgba(139, 0, 0, 0.2),
         0 20px 40px rgba(0, 0, 0, 0.8);
     }
 
+    .cam-solo-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      padding: 9px;
+      background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #FFD700, #8B0000);
+      background-size: 300% 300%;
+      animation: borderGlow 5s ease infinite;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: destination-out;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
     .cam-solo-box .cam-window {
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.05);
+      background: transparent;
       border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     /* ============================================================
@@ -139,6 +155,15 @@
               <div class="user-name" data-bind="guest-name"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <!-- BANNER DE FRASES / MOTTO BANNER -->
+      <div class="motto-banner" style="position: absolute; bottom: 50px; left: 10px; right: 10px; width: auto; padding: 5px 16px; border-radius: 6px;">
+        <div class="motto-text-group">
+          <span class="motto-phrase highlight" style="font-size: 14px;">🎙️ DIFUNDIENDO ARTISTAS POCOS CONOCIDOS</span>
+          <span class="motto-connector" style="font-size: 14px; width: 22px; height: 22px;">Y</span>
+          <span class="motto-phrase" style="font-size: 14px;">GUITARREAMOS A LA GORRA 🪕</span>
         </div>
       </div>
 

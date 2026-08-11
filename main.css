@@ -116,21 +116,40 @@
   }
 
   /* =========================================================
-     CAMERA BOX — Proporción 16:9 limpia y mayor presencia
+     CAMERA BOX — Marco con interior 100% transparente
      ========================================================= */
   .cam-box {
     width: 100%;
     flex: none;
-    aspect-ratio: 16 / 9; /* Garantiza encuadre 16:9 de cámara estándar */
+    aspect-ratio: 16 / 9;
     max-height: calc(45vh - 50px);
     position: relative;
+    border-radius: 16px;
+    background: transparent;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    margin: 0;
+  }
+
+  /* El ::after dibuja SOLO el borde animado — el interior queda hueco y transparente */
+  .cam-box::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     border-radius: 16px;
     padding: 7px;
     background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
     background-size: 200% 200%;
     animation: borderGlow 6s ease infinite;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
-    margin: 0;
+    /* Mask: muestra solo el área del borde (padding), el interior (content-box) es transparent */
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
   }
 
   @keyframes borderGlow {
@@ -142,9 +161,8 @@
   .cam-window {
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.06);
+    background: transparent;
     border-radius: 11px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* =========================================================
@@ -300,4 +318,108 @@
   @keyframes tickerRun {
     0%   { transform: translateX(100vw); }
     100% { transform: translateX(-100%); }
+  }
+
+  /* =========================================================
+     MOTTO BANNER / ESPACIO DE FRASES DE MARCA ("Difundiendo...")
+     ========================================================= */
+  .motto-banner {
+    background: linear-gradient(90deg, 
+      rgba(15, 5, 5, 0.95) 0%, 
+      rgba(40, 10, 10, 0.95) 25%,
+      rgba(65, 15, 15, 0.95) 50%,
+      rgba(40, 10, 10, 0.95) 75%,
+      rgba(15, 5, 5, 0.95) 100%
+    );
+    border-top: 2px solid rgba(255, 215, 0, 0.5);
+    border-bottom: 2px solid rgba(192, 57, 43, 0.6);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), inset 0 0 15px rgba(139, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    z-index: 10;
+    width: 100%;
+  }
+
+  .motto-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(255, 215, 0, 0.2) 50%, 
+      transparent 100%
+    );
+    animation: mottoShimmer 6s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes mottoShimmer {
+    0% { left: -100%; }
+    40%, 100% { left: 100%; }
+  }
+
+  .motto-text-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+
+  .motto-phrase {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 12px rgba(192, 57, 43, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9);
+    animation: mottoTextGlow 4s ease-in-out infinite alternate;
+  }
+
+  .motto-phrase.highlight {
+    color: #FFD700;
+    text-shadow: 0 0 14px rgba(255, 215, 0, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  .motto-connector {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    background: rgba(255, 215, 0, 0.15);
+    border: 1.5px solid #FFD700;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFD700;
+    font-weight: 900;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+    flex-shrink: 0;
+  }
+
+  @keyframes mottoTextGlow {
+    0% {
+      text-shadow: 0 0 10px rgba(192, 57, 43, 0.6), 0 2px 4px rgba(0, 0, 0, 0.9);
+    }
+    100% {
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(192, 57, 43, 0.8), 0 2px 4px rgba(0, 0, 0, 0.9);
+    }
+  }
+
+  /* Modo captura estática: desactivar animaciones dinámicas al tomar captura */
+  body.static-capture .motto-banner::before,
+  body.static-capture .motto-phrase {
+    animation: none !important;
   }
