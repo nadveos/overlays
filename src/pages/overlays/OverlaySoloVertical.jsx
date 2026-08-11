@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStreamData } from '../../hooks/useStreamData';
+import { useOverlayScale } from '../../hooks/useOverlayScale';
 import { TickerBar } from '../../components/TickerBar';
 import { MottoBanner } from '../../components/MottoBanner';
 import { CamCorners } from '../../components/CamCorners';
@@ -7,6 +8,7 @@ import { LiveIndicator } from '../../components/LiveIndicator';
 
 export function OverlaySoloVertical() {
   const { host, guest, ticker, guestEnabled } = useStreamData();
+  const { wrapperStyle, innerStyle } = useOverlayScale(1080, 1920);
 
   const activeName = guestEnabled ? guest.name : (host?.name || 'GUTA FLORES');
   const activeRole = guestEnabled ? (guest.role || '💬 INVITADO ESPECIAL') : (host?.role || '🎙️ ANFITRIÓN / HOST');
@@ -239,7 +241,8 @@ export function OverlaySoloVertical() {
       ];
 
   return (
-    <div style={styles.htmlBody}>
+    <div style={wrapperStyle}>
+    <div style={{ ...styles.htmlBody, ...innerStyle }}>
       <div className="main-border" style={styles.mainBorder}>
         <div className="main-inner">
           <div className="top-header" style={styles.topHeader}>
@@ -325,6 +328,7 @@ export function OverlaySoloVertical() {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

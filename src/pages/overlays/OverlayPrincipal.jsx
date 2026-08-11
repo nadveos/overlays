@@ -1,14 +1,17 @@
 import React from 'react';
 import { useStreamData } from '../../hooks/useStreamData';
+import { useOverlayScale } from '../../hooks/useOverlayScale';
 import { TickerBar } from '../../components/TickerBar';
 import { MottoBanner } from '../../components/MottoBanner';
 import { CamCorners } from '../../components/CamCorners';
 
 export function OverlayPrincipal() {
   const { host, guest, ticker, guestEnabled } = useStreamData();
+  const { wrapperStyle, innerStyle } = useOverlayScale(1920, 1080);
 
   return (
-    <div style={{ width: '1920px', height: '1080px', overflow: 'hidden', background: 'transparent' }}>
+    <div style={wrapperStyle}>
+      <div style={{ width: '1920px', height: '1080px', overflow: 'hidden', background: 'transparent', ...innerStyle }}>
       <div className="main-border" style={{ position: 'fixed', inset: 0 }}>
         <div className="main-inner">
           <div className="top-header">
@@ -45,6 +48,7 @@ export function OverlayPrincipal() {
           <TickerBar items={ticker} />
         </div>
       </div>
+    </div>
     </div>
   );
 }
