@@ -4,7 +4,7 @@
     "role": ""
   },
   "guest": {
-    "enabled": true,
+    "enabled": false,
     "name": "Raúl Domingo",
     "role": "",
     "bio": "",
@@ -28,7 +28,7 @@
   },
   "ticker": [
     {
-      "prefix": "CHARLANDO CON RAÚL DOMINGO",
+      "prefix": "",
       "text": "ALITAS : GUTA.FLORES",
       "highlight": true
     }
