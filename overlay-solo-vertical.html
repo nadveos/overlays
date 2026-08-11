@@ -6,65 +6,36 @@
   <link rel="stylesheet" href="main.css">
   <title>Guta Flores — Overlay Solo Vertical 9:16 (Mejorado)</title>
   <style>
-    /* ============================================================
-       FORMATO SOLO VERTICAL — 1080x1920 (9:16)
-       Vista de cámara única con zonas para texto y multimedia
-       ============================================================ */
+    /* 1. RESET GLOBAL OBLIGATORIO */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
     html,
     body {
       width: 1080px;
       height: 1920px;
+      margin: 0;
+      padding: 0;
       overflow: hidden;
+      background-color: transparent !important;
     }
 
+    /* 2. MARCO CONTENEDOR PRINCIPAL (1080x1920 exacto) */
     .main-border {
+      position: relative;
       width: 1080px;
       height: 1920px;
       padding: 14px;
+      overflow: hidden;
     }
 
-    /* ============================================================
-       HEADER SUPERIOR
-       ============================================================ */
-    .top-header {
-      top: 32px;
-      font-size: 26px;
-      padding: 14px 52px;
-      border-radius: 40px;
-    }
-
-    .top-header .badge {
-      font-size: 17px;
-      padding: 6px 18px;
-      border-radius: 20px;
-    }
-
-    /* ============================================================
-       LAYOUT PRINCIPAL 9:16
-       ┌─────────────────────────────────────┐
-       │  [HEADER — EN VIVO / GUTA FLORES]   │
-       ├─────────────────────────────────────┤
-       │                                     │
-       │   [ZONA MULTIMEDIA / TEXTO TOP]     │  ~10% altura
-       │                                     │
-       ├─────────────────────────────────────┤
-       │                                     │
-       │                                     │
-       │         [CÁMARA PRINCIPAL]          │  ~55% altura
-       │           (transparente)            │
-       │                                     │
-       │                                     │
-       ├─────────────────────────────────────┤
-       │       [NOMBRE / NAME TAG]           │
-       ├─────────────────────────────────────┤
-       │   [ZONA TEXTO / INFO / SOCIALES]    │  ~18% altura
-       ├─────────────────────────────────────┤
-       │         [TICKER INFERIOR]           │
-       └─────────────────────────────────────┘
-       ============================================================ */
+    /* 3. LAYOUT PRINCIPAL */
     .solo-layout {
       position: absolute;
-      top: 130px;
+      top: 110px;
       left: 20px;
       right: 20px;
       bottom: 100px;
@@ -73,12 +44,27 @@
       gap: 0;
     }
 
-    /* ============================================================
-       ZONA MULTIMEDIA / TEXTO SUPERIOR
-       Para mostrar logo del evento, título del stream, imagen, etc.
-       ============================================================ */
+    /* 4. HEADER SUPERIOR */
+    .top-header {
+      position: absolute;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 26px;
+      padding: 14px 52px;
+      border-radius: 40px;
+      z-index: 10;
+    }
+
+    .top-header .badge {
+      font-size: 17px;
+      padding: 6px 18px;
+      border-radius: 20px;
+    }
+
+    /* 5. ZONA MULTIMEDIA / TEXTO SUPERIOR */
     .top-info-zone {
-      flex: 0 0 auto;
+      flex: 0 0 180px;
       height: 180px;
       background: rgba(10, 10, 10, 0.75);
       border: 1.5px solid rgba(192, 57, 43, 0.4);
@@ -162,8 +148,9 @@
       margin-top: 6px;
     }
 
-    /* Separador decorativo superior-cámara */
-    .zone-separator {
+    /* SEPARADORES */
+    .zone-separator,
+    .bottom-separator {
       width: 100%;
       height: 3px;
       background: linear-gradient(90deg,
@@ -178,9 +165,7 @@
       flex-shrink: 0;
     }
 
-    /* ============================================================
-       ZONA DE CÁMARA PRINCIPAL (transparente)
-       ============================================================ */
+    /* 6. ZONA DE CÁMARA PRINCIPAL (TRANSPARENTE) */
     .cam-zone {
       flex: 1;
       position: relative;
@@ -196,19 +181,6 @@
       border-right: 3px solid rgba(139, 0, 0, 0.5);
     }
 
-    .solo-cam-box .cam-window {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 100px;
-      background: transparent;
-      border-radius: 16px;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Borde animado en la cámara */
     .solo-cam-box::before {
       content: '';
       position: absolute;
@@ -223,7 +195,7 @@
       pointer-events: none;
     }
 
-    /* Esquinas internas de la cámara */
+    /* ESQUINAS EN CÁMARA */
     .cam-corner {
       position: absolute;
       width: 60px;
@@ -263,7 +235,7 @@
       transform: scale(-1);
     }
 
-    /* Indicador de cámara en vivo (top-left) */
+    /* INDICADOR EN VIVO */
     .live-indicator {
       position: absolute;
       top: 20px;
@@ -309,9 +281,7 @@
       text-transform: uppercase;
     }
 
-    /* ============================================================
-       NAME TAG — Nombre del streamer sobre la cámara (abajo)
-       ============================================================ */
+    /* 7. NAME TAG DE CÁMARA */
     .name-tag-overlay {
       position: absolute;
       bottom: 0;
@@ -321,7 +291,7 @@
           transparent 0%,
           rgba(10, 5, 5, 0.85) 40%,
           rgba(15, 5, 5, 0.97) 100%);
-      padding: 60px 32px 24px 32px;
+      padding: 40px 32px 20px 32px;
       z-index: 4;
     }
 
@@ -335,9 +305,9 @@
 
     .name-main {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 72px;
+      font-size: 64px;
       color: #FFFFFF;
-      letter-spacing: 8px;
+      letter-spacing: 6px;
       line-height: 1;
       text-shadow:
         0 0 20px rgba(192, 57, 43, 0.7),
@@ -345,7 +315,7 @@
     }
 
     .name-social {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 700;
       color: #FFD700;
       letter-spacing: 2px;
@@ -353,13 +323,10 @@
       opacity: 0.9;
     }
 
-    /* ============================================================
-       ZONA DE TEXTO / INFO INFERIOR
-       Para descripción del stream, tema, redes sociales, etc.
-       ============================================================ */
+    /* 8. ZONA INFERIOR DE TEXTO / INFO */
     .bottom-info-zone {
-      flex: 0 0 auto;
-      height: 320px;
+      flex: 0 0 300px;
+      height: 300px;
       background: rgba(10, 10, 10, 0.88);
       border: 1.5px solid rgba(192, 57, 43, 0.4);
       border-radius: 0 0 20px 20px;
@@ -368,21 +335,6 @@
       flex-direction: column;
       overflow: hidden;
       backdrop-filter: blur(8px);
-    }
-
-    .bottom-separator {
-      width: 100%;
-      height: 3px;
-      background: linear-gradient(90deg,
-          transparent 0%,
-          #8B0000 15%,
-          #C0392B 35%,
-          #FFD700 50%,
-          #C0392B 65%,
-          #8B0000 85%,
-          transparent 100%);
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-      flex-shrink: 0;
     }
 
     .bottom-content {
@@ -394,7 +346,6 @@
       overflow: hidden;
     }
 
-    /* Columna izquierda: descripción del stream */
     .stream-desc {
       flex: 1;
       display: flex;
@@ -411,10 +362,10 @@
     }
 
     .desc-text {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.9);
-      line-height: 1.5;
+      line-height: 1.4;
       flex: 1;
     }
 
@@ -429,13 +380,12 @@
       border: 1px solid rgba(192, 57, 43, 0.5);
       border-radius: 20px;
       padding: 4px 14px;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #FFD700;
       letter-spacing: 1px;
     }
 
-    /* Divisor vertical interno */
     .inner-divider {
       width: 2px;
       background: linear-gradient(180deg,
@@ -447,9 +397,8 @@
       flex-shrink: 0;
     }
 
-    /* Columna derecha: redes sociales */
     .social-zone {
-      flex: 0 0 280px;
+      flex: 0 0 260px;
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -472,11 +421,11 @@
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid rgba(192, 57, 43, 0.3);
       border-radius: 12px;
-      padding: 10px 14px;
+      padding: 8px 12px;
     }
 
     .social-icon {
-      font-size: 22px;
+      font-size: 20px;
       flex-shrink: 0;
     }
 
@@ -486,7 +435,7 @@
     }
 
     .social-platform {
-      font-size: 11px;
+      font-size: 10px;
       color: rgba(255, 255, 255, 0.45);
       text-transform: uppercase;
       font-weight: 700;
@@ -494,21 +443,19 @@
     }
 
     .social-handle {
-      font-size: 17px;
+      font-size: 15px;
       color: #FFFFFF;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
 
-    /* ============================================================
-       TICKER INFERIOR
-       ============================================================ */
+    /* 9. TICKER INFERIOR */
     .ticker-bar-v {
       position: absolute;
-      bottom: 20px;
+      bottom: 16px;
       left: 20px;
       right: 20px;
-      height: 68px;
+      height: 64px;
       background: linear-gradient(90deg, #0d0d0d 0%, #1a0000 40%, #0d0d0d 100%);
       border: 2px solid #C0392B;
       border-radius: 14px;
@@ -524,22 +471,23 @@
       background: linear-gradient(135deg, #8B0000, #C0392B);
       color: #FFD700;
       font-weight: 900;
-      font-size: 16px;
-      padding: 0 22px;
+      font-size: 15px;
+      padding: 0 20px;
       height: 100%;
       display: flex;
       align-items: center;
       letter-spacing: 2px;
       text-transform: uppercase;
       border-right: 2px solid #FFD700;
-      gap: 10px;
+      gap: 8px;
       white-space: nowrap;
     }
 
     .ticker-bar-v .ticker-content {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 600;
     }
+
 
     /* ============================================================
        MULTIMEDIA ZONE — Zona alternativa (visible cuando se activa)

@@ -1,0 +1,36 @@
+{
+  "host": {
+    "name": "Guta Flores",
+    "role": ""
+  },
+  "guest": {
+    "enabled": true,
+    "name": "Raúl Domingo",
+    "role": "",
+    "bio": "",
+    "socials": [
+      {
+        "icon": "♪",
+        "platform": "TikTok",
+        "handle": "@rauldomingooficial"
+      },
+      {
+        "icon": "🅾",
+        "platform": "Instagram ",
+        "handle": ""
+      },
+      {
+        "icon": "🅾",
+        "platform": "Facebook",
+        "handle": ""
+      }
+    ]
+  },
+  "ticker": [
+    {
+      "prefix": "CHARLANDO CON RAÚL DOMINGO",
+      "text": "ALITAS : GUTA.FLORES",
+      "highlight": true
+    }
+  ]
+}

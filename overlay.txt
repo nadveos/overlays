@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>OBS Overlay - Poncho Salteño</title>
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: relative;
+  }
+
+  /* Main Animated Frame - Poncho Salteño Colors */
+  .main-border {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 1880px;
+    height: 1040px;
+    border-radius: 24px;
+    padding: 12px;
+    background: linear-gradient(135deg, 
+      #8B0000 0%, 
+      #C0392B 15%, 
+      #1A1A1A 25%, 
+      #1A1A1A 30%, 
+      #8B0000 40%, 
+      #C0392B 55%, 
+      #1A1A1A 65%, 
+      #1A1A1A 70%, 
+      #8B0000 85%, 
+      #C0392B 100%
+    );
+    background-size: 300% 300%;
+    animation: ponchoWave 8s ease infinite;
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+
+  .main-inner {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 16px;
+    position: relative;
+    border: 2px solid rgba(255, 215, 0, 0.3);
+  }
+
+  @keyframes ponchoWave {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* Top Banner / Header */
+  .top-header {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(20, 20, 20, 0.85);
+    border: 2px solid #8B0000;
+    border-radius: 30px;
+    padding: 10px 40px;
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  }
+
+  .top-header .badge {
+    background: #8B0000;
+    color: #FFF;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* Camera Container Grid */
+  .cameras-container {
+    position: absolute;
+    top: 180px;
+    left: 60px;
+    width: 1800px;
+    height: 780px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Camera Box Base */
+  .cam-box {
+    width: 860px;
+    height: 700px;
+    position: relative;
+    border-radius: 20px;
+    padding: 8px;
+    background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
+    background-size: 200% 200%;
+    animation: borderGlow 6s ease infinite;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+  }
+
+  @keyframes borderGlow {
+    0% { background-position: 0% 0%; }
+    50% { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
+
+  /* Transparent Window for Video Feeds */
+  .cam-window {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Label / Name Tag */
+  .name-tag {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #1A1A1A 0%, #330000 50%, #1A1A1A 100%);
+    border: 2px solid #C0392B;
+    border-radius: 12px;
+    padding: 8px 30px;
+    min-width: 280px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+  }
+
+  .role-title {
+    color: #E74C3C;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .user-name {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 2px;
+  }
+
+  /* Salta / Poncho Decorative Stripes overlay in corners */
+  .corner-stripe-left {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    width: 150px;
+    height: 12px;
+    background: repeating-linear-gradient(
+      90deg,
+      #8B0000,
+      #8B0000 20px,
+      #1A1A1A 20px,
+      #1A1A1A 30px,
+      #C0392B 30px,
+      #C0392B 50px
+    );
+    border-radius: 6px;
+    opacity: 0.8;
+  }
+
+  .corner-stripe-right {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    width: 150px;
+    height: 12px;
+    background: repeating-linear-gradient(
+      90deg,
+      #C0392B,
+      #C0392B 20px,
+      #1A1A1A 20px,
+      #1A1A1A 30px,
+      #8B0000 30px,
+      #8B0000 50px
+    );
+    border-radius: 6px;
+    opacity: 0.8;
+  }
+</style>
+</head>
+<body>
+
+  <!-- Marco General Animado -->
+  <div class="main-border">
+    <div class="main-inner">
+      
+      <!-- Encabezado / Titulo -->
+      <div class="top-header">
+        <span class="badge">EN VIVO</span>
+        <span>ENTREVISTA CO-EMISIÓN</span>
+      </div>
+
+      <!-- Contenedor de Camaras -->
+      <div class="cameras-container">
+        
+        <!-- Marco Host / Anfitrión -->
+        <div class="cam-box">
+          <div class="cam-window"></div>
+          <div class="name-tag">
+            <div class="role-title">🎙️ ANFITRIÓN / HOST</div>
+            <div class="user-name">[Nombre Anfitrión]</div>
+          </div>
+        </div>
+
+        <!-- Marco Invitado -->
+        <div class="cam-box">
+          <div class="cam-window"></div>
+          <div class="name-tag">
+            <div class="role-title">💬 INVITADO</div>
+            <div class="user-name">[Nombre Invitado]</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="corner-stripe-left"></div>
+      <div class="corner-stripe-right"></div>
+
+    </div>
+  </div>
+
+</body>
+</html>
