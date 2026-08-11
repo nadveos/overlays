@@ -1,0 +1,344 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@400;600;700;900&display=swap');
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: transparent;
+    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =========================================================
+     MAIN BORDER — cubre 100% sin gaps transparentes
+     ========================================================= */
+.main-border {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 10px;
+    background: linear-gradient(135deg,
+            #8B0000 0%,
+            #C0392B 15%,
+            #1A1A1A 25%,
+            #1A1A1A 30%,
+            #8B0000 40%,
+            #C0392B 55%,
+            #1A1A1A 65%,
+            #1A1A1A 70%,
+            #8B0000 85%,
+            #C0392B 100%);
+    background-size: 300% 300%;
+    animation: ponchoWave 8s ease infinite;
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.6), inset 0 0 20px rgba(0, 0, 0, 0.8);
+    border-radius: 0;
+}
+
+.main-inner {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: 0;
+    position: relative;
+    border: 2px solid rgba(255, 215, 0, 0.25);
+}
+
+@keyframes ponchoWave {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* =========================================================
+     HEADER
+     ========================================================= */
+.top-header {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 15, 15, 0.9);
+    border: 2px solid #8B0000;
+    border-radius: 30px;
+    padding: 8px 36px;
+    color: #FFFFFF;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(139, 0, 0, 0.5);
+    z-index: 10;
+}
+
+.top-header .badge {
+    background: linear-gradient(135deg, #8B0000, #C0392B);
+    color: #FFF;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0.7);
+    }
+
+    50% {
+        opacity: 0.85;
+        transform: scale(1.05);
+        box-shadow: 0 0 0 6px rgba(192, 57, 43, 0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(192, 57, 43, 0);
+    }
+}
+
+/* =========================================================
+     CAMERAS CONTAINER — Columna izquierda balanceada (30% ancho)
+     ========================================================= */
+.cameras-container {
+    position: absolute;
+    top: 72px;
+    left: 16px;
+    bottom: 54px;
+    width: 30%;
+    /* Aumentado de 25% a 30% para mejor presencia visual */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+    /* Separación fluida entre cámaras */
+}
+
+/* =========================================================
+     CAMERA BOX — Proporción 16:9 limpia y mayor presencia
+     ========================================================= */
+.cam-box {
+    width: 100%;
+    flex: none;
+    aspect-ratio: 16 / 9;
+    /* Garantiza encuadre 16:9 de cámara estándar */
+    max-height: calc(45vh - 50px);
+    position: relative;
+    border-radius: 16px;
+    padding: 7px;
+    background: linear-gradient(45deg, #8B0000, #1A1A1A, #C0392B, #1A1A1A);
+    background-size: 200% 200%;
+    animation: borderGlow 6s ease infinite;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.8);
+    margin: 0;
+}
+
+@keyframes borderGlow {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    50% {
+        background-position: 100% 100%;
+    }
+
+    100% {
+        background-position: 0% 0%;
+    }
+}
+
+.cam-window {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 11px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* =========================================================
+     NAME TAG
+     ========================================================= */
+.name-tag {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #0d0d0d 0%, #2a0000 50%, #0d0d0d 100%);
+    border: 2px solid #C0392B;
+    border-radius: 10px;
+    padding: 5px 22px;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.9), 0 0 10px rgba(192, 57, 43, 0.3);
+    z-index: 5;
+    white-space: nowrap;
+}
+
+.role-title {
+    color: #E74C3C;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.user-name {
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 800;
+    margin-top: 2px;
+    letter-spacing: 1px;
+}
+
+/* =========================================================
+     CORNER STRIPES
+     ========================================================= */
+.corner-stripe-left {
+    position: absolute;
+    bottom: 52px;
+    left: 18px;
+    width: 120px;
+    height: 8px;
+    background: repeating-linear-gradient(90deg,
+            #8B0000, #8B0000 20px,
+            #1A1A1A 20px, #1A1A1A 30px,
+            #C0392B 30px, #C0392B 50px);
+    border-radius: 4px;
+    opacity: 0.75;
+}
+
+.corner-stripe-right {
+    position: absolute;
+    bottom: 52px;
+    right: 18px;
+    width: 120px;
+    height: 8px;
+    background: repeating-linear-gradient(90deg,
+            #C0392B, #C0392B 20px,
+            #1A1A1A 20px, #1A1A1A 30px,
+            #8B0000 30px, #8B0000 50px);
+    border-radius: 4px;
+    opacity: 0.75;
+}
+
+/* =========================================================
+     TICKER BAR — texto animado destacado
+     Compartido en todos los overlays
+     ========================================================= */
+.ticker-bar {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    height: 38px;
+    background: linear-gradient(90deg, #0d0d0d 0%, #1a0000 40%, #0d0d0d 100%);
+    border: 1.5px solid #C0392B;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    z-index: 20;
+    box-shadow: 0 0 12px rgba(139, 0, 0, 0.5), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+}
+
+.ticker-label {
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #8B0000, #C0392B);
+    color: #FFD700;
+    font-weight: 900;
+    font-size: 11px;
+    padding: 0 14px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border-right: 2px solid #FFD700;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.ticker-dot {
+    width: 7px;
+    height: 7px;
+    background: #FFD700;
+    border-radius: 50%;
+    animation: tickerDotBlink 1.2s ease infinite;
+}
+
+@keyframes tickerDotBlink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.2;
+    }
+}
+
+.ticker-track {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* ✏️ EDITAR EL TEXTO en el HTML dentro de .ticker-content */
+.ticker-content {
+    display: inline-block;
+    white-space: nowrap;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    animation: tickerRun 35s linear infinite;
+}
+
+.ticker-content span.highlight {
+    color: #FFD700;
+    font-weight: 900;
+}
+
+.ticker-content span.sep {
+    color: #C0392B;
+    margin: 0 12px;
+}
+
+@keyframes tickerRun {
+    0% {
+        transform: translateX(100vw);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
